@@ -28,6 +28,7 @@
     ]
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "axios": "^1.15.2",
     "element-plus": "^2.13.7",
     "pinia": "^3.0.4",
@@ -47,6 +48,7 @@
     "eslint": "^10.2.1",
     "eslint-plugin-vue": "^10.9.0",
     "globals": "^17.5.0",
+    "happy-dom": "^20.9.0",
     "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "lint-staged": "^16.4.0",

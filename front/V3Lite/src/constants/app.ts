@@ -1,0 +1,6 @@
+export const ACCESS_TOKEN_KEY = 'v3lite-access-token'
+export const ROOT_ROUTE_NAME = 'Root'
+export const LOGIN_ROUTE_PATH = '/login'
+export const FORBIDDEN_ROUTE_PATH = '/403'
+export const NOT_FOUND_ROUTE_PATH = '/404'
+export const DEFAULT_HOME_PATH = '/overview/analytics'
