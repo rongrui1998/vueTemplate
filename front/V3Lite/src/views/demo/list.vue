@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 
-import { usePermissionStore } from '@/stores/permission'
+import { usePermission } from '@/composables/use-permission'
 
 interface DemoRecord {
   id: string
@@ -10,7 +10,7 @@ interface DemoRecord {
   status: '进行中' | '待确认' | '已完成'
 }
 
-const permissionStore = usePermissionStore()
+const { hasPermission } = usePermission()
 
 const allRows = ref<DemoRecord[]>([
   { id: 'D-1001', name: '模板权限演示', owner: 'Admin', status: '进行中' },
@@ -44,7 +44,7 @@ const form = reactive<Omit<DemoRecord, 'id'>>({
 
 const statusOptions = ['全部', '进行中', '待确认', '已完成']
 
-const canCreate = computed(() => permissionStore.hasPermission('demo:create'))
+const canCreate = computed(() => hasPermission('demo:create'))
 
 const filteredRows = computed(() => {
   return allRows.value.filter((row) => {
@@ -149,6 +149,14 @@ function submitForm() {
         <ElTableColumn label="状态" min-width="120">
           <template #default="{ row }">
             <span class="status-pill" :class="`status-pill--${row.status}`">{{ row.status }}</span>
+          </template>
+        </ElTableColumn>
+        <ElTableColumn label="操作" min-width="160" fixed="right">
+          <template #default>
+            <div class="table-actions">
+              <ElButton text type="primary">编辑</ElButton>
+              <ElButton v-permission="'demo:create'" text type="warning">更多操作</ElButton>
+            </div>
           </template>
         </ElTableColumn>
       </ElTable>
@@ -280,6 +288,12 @@ function submitForm() {
   display: flex;
   justify-content: flex-end;
   margin-top: 14px;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .status-pill {

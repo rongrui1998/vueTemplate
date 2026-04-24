@@ -2,8 +2,9 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { nextTick } from 'vue'
 
-import DemoListPage from '@/views/demo/list.vue'
+import { permissionDirective } from '@/directives/permission'
 import { usePermissionStore } from '@/stores/permission'
+import DemoListPage from '@/views/demo/list.vue'
 
 describe('DemoListPage', () => {
   function mountPage(accessCodes: string[] = ['demo:create']) {
@@ -15,6 +16,9 @@ describe('DemoListPage', () => {
 
     return mount(DemoListPage, {
       global: {
+        directives: {
+          permission: permissionDirective,
+        },
         plugins: [pinia],
         stubs: {
           teleport: true,
