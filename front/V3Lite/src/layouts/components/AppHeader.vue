@@ -1,77 +1,125 @@
 <script setup lang="ts">
-import { Bell, FullScreen, Search, Setting, Sunny, SwitchButton } from '@element-plus/icons-vue'
-import { useRouter } from 'vue-router'
+import {
+  Bell,
+  Close,
+  CollectionTag,
+  Compass,
+  CopyDocument,
+  DataAnalysis,
+  Document,
+  Fold,
+  FullScreen,
+  Grid,
+  Operation,
+  RefreshRight,
+  Search,
+  Setting,
+  Sunny,
+  Tickets,
+} from '@element-plus/icons-vue'
+import { computed } from 'vue'
 
 import AppBreadcrumb from './AppBreadcrumb.vue'
 import { usePermissionStore } from '@/stores/permission'
 import { useUserStore } from '@/stores/user'
 
-const router = useRouter()
 const permissionStore = usePermissionStore()
 const userStore = useUserStore()
 
-async function handleLogout() {
-  userStore.logout()
-  permissionStore.resetAccess(router)
-  await router.replace('/login')
+const topLeadingActions = [Fold, RefreshRight]
+const topUtilityActions = [Setting, Sunny, CollectionTag, Compass, FullScreen, Bell]
+const tabTrailingActions = [Grid, RefreshRight, CopyDocument]
+
+const iconMap = {
+  DataAnalysis,
+  Document,
+  Grid,
+  Operation,
+  Tickets,
+}
+
+const tabs = computed(() => permissionStore.flatLeafMenus)
+
+function resolveMenuIcon(icon?: string) {
+  return icon ? (iconMap[icon as keyof typeof iconMap] ?? Document) : Document
 }
 </script>
 
 <template>
   <header class="header-shell">
     <div class="header-main">
-      <div class="flex items-center gap-4">
-        <button class="action-btn action-btn--ghost" type="button">
-          <ElIcon><Search /></ElIcon>
+      <div class="header-leading">
+        <button
+          v-for="(icon, index) in topLeadingActions"
+          :key="`leading-${index}`"
+          class="toolbar-btn toolbar-btn--ghost"
+          type="button"
+        >
+          <ElIcon><component :is="icon" /></ElIcon>
         </button>
-        <div>
+
+        <div class="header-breadcrumb">
           <AppBreadcrumb />
-          <h2 class="mt-2 text-lg font-semibold text-slate-50">后台管理模板</h2>
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
+      <div class="header-toolbar">
         <button class="search-pill" type="button">
           <ElIcon><Search /></ElIcon>
           <span>搜索</span>
           <kbd>⌘ K</kbd>
         </button>
-        <button class="action-btn" type="button">
-          <ElIcon><Setting /></ElIcon>
-        </button>
-        <button class="action-btn" type="button">
-          <ElIcon><Sunny /></ElIcon>
-        </button>
-        <button class="action-btn" type="button">
-          <ElIcon><FullScreen /></ElIcon>
-        </button>
-        <button class="action-btn" type="button">
-          <ElIcon><Bell /></ElIcon>
+
+        <button
+          v-for="(icon, index) in topUtilityActions"
+          :key="`utility-${index}`"
+          class="toolbar-btn"
+          type="button"
+        >
+          <ElIcon><component :is="icon" /></ElIcon>
         </button>
 
-        <div class="user-pill">
+        <button class="avatar-btn" type="button">
           <img :src="userStore.userInfo?.avatar" alt="avatar" />
-          <div>
-            <p>{{ userStore.userInfo?.nickname || '未登录' }}</p>
-            <span>{{ userStore.userInfo?.roles?.[0] || 'guest' }}</span>
-          </div>
-          <button class="action-btn action-btn--ghost" type="button" @click="handleLogout">
-            <ElIcon><SwitchButton /></ElIcon>
-          </button>
-        </div>
+        </button>
       </div>
     </div>
 
     <div class="header-tabs">
-      <RouterLink
-        v-for="item in permissionStore.flatLeafMenus"
-        :key="item.name"
-        :to="item.path"
-        class="tab-chip"
-        active-class="tab-chip--active"
-      >
-        {{ item.meta.title }}
-      </RouterLink>
+      <div class="header-tabs__scroll">
+        <RouterLink
+          v-for="item in tabs"
+          :key="item.name"
+          :to="item.path"
+          class="tab-link"
+          active-class="tab-link--active"
+        >
+          <span class="tab-link__main">
+            <ElIcon class="tab-link__menu-icon">
+              <component :is="resolveMenuIcon(item.meta.icon)" />
+            </ElIcon>
+            <span>{{ item.meta.title }}</span>
+          </span>
+
+          <ElIcon v-if="item.meta.affix" data-test="tab-affix" class="tab-link__meta-icon">
+            <CollectionTag />
+          </ElIcon>
+          <ElIcon v-else data-test="tab-close" class="tab-link__meta-icon">
+            <Close />
+          </ElIcon>
+        </RouterLink>
+      </div>
+
+      <div class="header-tabs__actions">
+        <button
+          v-for="(icon, index) in tabTrailingActions"
+          :key="`tab-action-${index}`"
+          class="tab-action-btn"
+          type="button"
+        >
+          <ElIcon><component :is="icon" /></ElIcon>
+        </button>
+      </div>
     </div>
   </header>
 </template>
@@ -80,29 +128,48 @@ async function handleLogout() {
 .header-shell {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 12px 16px 10px;
-  border-bottom: 1px solid rgb(255 255 255 / 6%);
-  background: rgb(9 13 22 / 82%);
-  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgb(255 255 255 / 7%);
+  background: linear-gradient(180deg, rgb(5 10 22 / 96%) 0%, rgb(7 12 24 / 96%) 100%);
 }
 
 .header-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 20px;
+  min-height: 60px;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgb(255 255 255 / 6%);
+}
+
+.header-leading {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-breadcrumb {
+  min-width: 0;
+  margin-left: 6px;
+}
+
+.header-toolbar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
 }
 
 .search-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 0 12px;
-  height: 36px;
+  height: 40px;
+  padding: 0 14px;
   border: 1px solid rgb(148 163 184 / 18%);
   border-radius: 999px;
-  background: rgb(15 23 42 / 65%);
+  background: rgb(21 30 49 / 88%);
   color: #94a3b8;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -121,94 +188,154 @@ async function handleLogout() {
   }
 }
 
-.action-btn {
+.toolbar-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgb(148 163 184 / 18%);
-  border-radius: 10px;
-  background: rgb(15 23 42 / 72%);
+  width: 32px;
+  height: 32px;
+  border: 0;
+  background: transparent;
   color: #cbd5e1;
   cursor: pointer;
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    opacity 0.2s ease;
 
   &:hover {
     color: #f8fafc;
-    border-color: rgb(96 165 250 / 35%);
-    transform: translateY(-1px);
+    opacity: 1;
   }
 }
 
-.action-btn--ghost {
-  background: transparent;
+.toolbar-btn--ghost {
+  color: #e2e8f0;
 }
 
-.user-pill {
-  display: flex;
+.avatar-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 3px 4px 3px 3px;
-  border: 1px solid rgb(148 163 184 / 18%);
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid rgb(255 255 255 / 10%);
   border-radius: 999px;
-  background: rgb(15 23 42 / 72%);
+  background: rgb(30 41 59 / 78%);
+  cursor: pointer;
 
   img {
-    width: 34px;
-    height: 34px;
+    width: 100%;
+    height: 100%;
     border-radius: 999px;
     object-fit: cover;
-  }
-
-  p {
-    margin: 0;
-    color: #f8fafc;
-    font-size: 13px;
-    font-weight: 600;
-  }
-
-  span {
-    font-size: 11px;
-    color: #94a3b8;
-    text-transform: uppercase;
   }
 }
 
 .header-tabs {
   display: flex;
-  gap: 8px;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 58px;
+  border-top: 1px solid rgb(255 255 255 / 2%);
+}
+
+.header-tabs__scroll {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: stretch;
   overflow-x: auto;
 }
 
-.tab-chip {
-  display: inline-flex;
+.header-tabs__actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  border-left: 1px solid rgb(255 255 255 / 8%);
+}
+
+.tab-link {
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   min-width: max-content;
-  padding: 8px 12px;
-  border: 1px solid rgb(148 163 184 / 12%);
-  border-radius: 12px;
-  background: rgb(15 23 42 / 50%);
-  color: #94a3b8;
+  padding: 0 18px;
+  border-right: 1px solid rgb(255 255 255 / 8%);
+  background: transparent;
+  color: #cbd5e1;
   font-size: 13px;
   text-decoration: none;
   transition:
     color 0.2s ease,
-    border-color 0.2s ease,
     background-color 0.2s ease;
 
   &:hover {
     color: #f8fafc;
-    border-color: rgb(96 165 250 / 28%);
+    background: rgb(18 25 42 / 72%);
   }
 }
 
-.tab-chip--active {
+.tab-link__main {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-link__menu-icon,
+.tab-link__meta-icon {
+  font-size: 14px;
+}
+
+.tab-link__meta-icon {
+  color: #9aa6bc;
+}
+
+.tab-link--active {
   color: #f8fafc;
-  border-color: rgb(96 165 250 / 28%);
-  background: linear-gradient(180deg, rgb(38 48 66) 0%, rgb(28 37 53) 100%);
+  background: linear-gradient(180deg, rgb(42 52 74) 0%, rgb(35 45 67) 100%);
+}
+
+.tab-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  border: 0;
+  border-left: 1px solid rgb(255 255 255 / 8%);
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    color: #f8fafc;
+    background: rgb(19 27 43 / 86%);
+  }
+}
+
+@media (width <= 1200px) {
+  .header-toolbar {
+    gap: 8px;
+  }
+
+  .search-pill span {
+    display: none;
+  }
+}
+
+@media (width <= 960px) {
+  .header-main {
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+  }
+
+  .header-toolbar {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 </style>

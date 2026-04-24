@@ -10,13 +10,40 @@ const crumbs = computed(() =>
 </script>
 
 <template>
-  <div class="flex items-center gap-2 text-[13px] text-slate-400">
-    <span class="text-slate-500">概览</span>
+  <div class="breadcrumb-shell">
     <template v-for="item in crumbs" :key="item.path">
-      <span class="text-slate-600">/</span>
-      <span class="font-medium text-slate-200">
+      <span v-if="item !== crumbs[0]" class="breadcrumb-separator">›</span>
+      <span class="breadcrumb-item">
         {{ item.meta.title }}
       </span>
     </template>
   </div>
 </template>
+
+<style scoped lang="scss">
+.breadcrumb-shell {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  color: #8ea0ba;
+  font-size: 13px;
+}
+
+.breadcrumb-separator {
+  color: #51617a;
+  flex-shrink: 0;
+}
+
+.breadcrumb-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumb-shell :last-child {
+  color: #f8fafc;
+  font-weight: 600;
+}
+</style>
