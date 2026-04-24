@@ -3,6 +3,7 @@ import { Lock, User } from '@element-plus/icons-vue'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
+import { appEnv } from '@/constants/env'
 import { usePermissionStore } from '@/stores/permission'
 import { useUserStore } from '@/stores/user'
 
@@ -51,7 +52,7 @@ async function handleLogin() {
     <section class="login-card">
       <div>
         <p class="login-card__eyebrow">欢迎回来</p>
-        <h2>登录 V3 Lite</h2>
+        <h2>登录 {{ appEnv.title }}</h2>
         <p class="login-card__tips">演示账号：admin / admin123</p>
       </div>
 

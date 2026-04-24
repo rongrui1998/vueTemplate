@@ -2,6 +2,7 @@ import { getActivePinia } from 'pinia'
 import type { App } from 'vue'
 import type { NavigationGuardWithThis, RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
+import { appEnv } from '@/constants/env'
 import { FORBIDDEN_ROUTE_PATH, LOGIN_ROUTE_PATH, NOT_FOUND_ROUTE_PATH } from '@/constants/app'
 import { router } from '@/router'
 import { pinia } from '@/stores'
@@ -80,6 +81,7 @@ function setupGuards() {
     const tabsStore = useTabsStore(activePinia)
 
     tabsStore.syncRoute(to)
+    document.title = to.meta.title ? `${String(to.meta.title)} - ${appEnv.title}` : appEnv.title
   })
 }
 

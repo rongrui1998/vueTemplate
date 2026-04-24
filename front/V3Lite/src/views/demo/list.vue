@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 
+import { fetchDemoRecordsApi } from '@/api/demo'
 import { usePermission } from '@/composables/use-permission'
-
-interface DemoRecord {
-  id: string
-  name: string
-  owner: string
-  status: '进行中' | '待确认' | '已完成'
-}
+import type { DemoRecord } from '@/api/demo'
 
 const { hasPermission } = usePermission()
 
-const allRows = ref<DemoRecord[]>([
-  { id: 'D-1001', name: '模板权限演示', owner: 'Admin', status: '进行中' },
-  { id: 'D-1002', name: '列表页规范草稿', owner: 'Taylor', status: '待确认' },
-  { id: 'D-1003', name: '动态菜单联调', owner: 'Jordan', status: '已完成' },
-  { id: 'D-1004', name: '登录页视觉压缩', owner: 'Admin', status: '进行中' },
-  { id: 'D-1005', name: '布局密度校准', owner: 'Taylor', status: '待确认' },
-])
+const allRows = ref<DemoRecord[]>([])
+const tableLoading = ref(false)
 
 const filters = reactive({
   keyword: '',
@@ -84,6 +74,16 @@ function openCreateDialog() {
   dialogVisible.value = true
 }
 
+async function loadRows() {
+  tableLoading.value = true
+
+  try {
+    allRows.value = await fetchDemoRecordsApi()
+  } finally {
+    tableLoading.value = false
+  }
+}
+
 function submitForm() {
   const nextId = `D-${String(1000 + allRows.value.length + 1)}`
   allRows.value = [
@@ -96,6 +96,10 @@ function submitForm() {
   dialogVisible.value = false
   pagination.page = 1
 }
+
+onMounted(() => {
+  void loadRows()
+})
 </script>
 
 <template>
@@ -164,7 +168,7 @@ function submitForm() {
         <p>最近更新时间：今天</p>
       </div>
 
-      <ElTable :data="pagedRows">
+      <ElTable v-loading="tableLoading" :data="pagedRows">
         <ElTableColumn prop="id" label="编号" min-width="120" />
         <ElTableColumn prop="name" label="名称" min-width="220" />
         <ElTableColumn prop="owner" label="负责人" min-width="120" />

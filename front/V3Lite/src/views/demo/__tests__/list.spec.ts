@@ -1,7 +1,8 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { nextTick } from 'vue'
 
+import * as demoApi from '@/api/demo'
 import { permissionDirective } from '@/directives/permission'
 import { usePermissionStore } from '@/stores/permission'
 import DemoListPage from '@/views/demo/list.vue'
@@ -27,6 +28,24 @@ describe('DemoListPage', () => {
       },
     })
   }
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('loads rows from the demo api', async () => {
+    const fetchSpy = vi
+      .spyOn(demoApi, 'fetchDemoRecordsApi')
+      .mockResolvedValue([
+        { id: 'D-9001', name: '来自接口的数据', owner: 'Codex', status: '进行中' },
+      ])
+
+    const wrapper = mountPage()
+    await flushPromises()
+
+    expect(fetchSpy).toHaveBeenCalledTimes(1)
+    expect(wrapper.text()).toContain('来自接口的数据')
+  })
 
   it('filters rows by keyword', async () => {
     const wrapper = mountPage()

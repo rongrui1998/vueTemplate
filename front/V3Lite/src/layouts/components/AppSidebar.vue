@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import SidebarMenuNode from './SidebarMenuNode.vue'
+import { appEnv } from '@/constants/env'
 import type { MenuItem } from '@/types/permission'
 import { usePermissionStore } from '@/stores/permission'
 
@@ -101,8 +102,8 @@ watch(
         <span />
       </div>
       <div>
-        <p class="brand-title">V3 Lite Admin</p>
-        <p class="brand-subtitle">Vue Admin Template</p>
+        <p class="brand-title">{{ appEnv.title }}</p>
+        <p class="brand-subtitle">{{ appEnv.subtitle }}</p>
       </div>
     </div>
 
