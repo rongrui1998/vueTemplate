@@ -53,25 +53,25 @@ const timeline = [
 .workspace-page {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 24px;
+  gap: 16px;
+  padding: 18px;
 }
 
 .workspace-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
-  gap: 18px;
+  gap: 14px;
 }
 
 .workspace-card,
 .workspace-table {
   border: 1px solid rgb(255 255 255 / 6%);
-  border-radius: 22px;
+  border-radius: 18px;
   background: rgb(12 18 30 / 92%);
 }
 
 .workspace-card {
-  padding: 24px;
+  padding: 18px;
 
   p {
     margin: 0;
@@ -85,7 +85,7 @@ const timeline = [
   h1 {
     margin: 12px 0 0;
     color: #f8fafc;
-    font-size: 30px;
+    font-size: 26px;
     line-height: 1.35;
   }
 
@@ -111,7 +111,7 @@ const timeline = [
 }
 
 .workspace-table {
-  padding: 24px;
+  padding: 18px;
 }
 
 .workspace-table__head {
@@ -132,7 +132,7 @@ const timeline = [
 .workspace-table__list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   margin-top: 18px;
 }
 
@@ -141,8 +141,8 @@ const timeline = [
   grid-template-columns: 2fr repeat(3, 1fr);
   gap: 12px;
   align-items: center;
-  padding: 16px 18px;
-  border-radius: 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
   background: rgb(15 23 42 / 72%);
   color: #94a3b8;
 

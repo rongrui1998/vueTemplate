@@ -80,8 +80,8 @@ async function handleLogout() {
 .header-shell {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 18px 22px 16px;
+  gap: 10px;
+  padding: 12px 16px 10px;
   border-bottom: 1px solid rgb(255 255 255 / 6%);
   background: rgb(9 13 22 / 82%);
   backdrop-filter: blur(18px);
@@ -91,15 +91,15 @@ async function handleLogout() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
 }
 
 .search-pill {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 14px;
-  height: 40px;
+  gap: 8px;
+  padding: 0 12px;
+  height: 36px;
   border: 1px solid rgb(148 163 184 / 18%);
   border-radius: 999px;
   background: rgb(15 23 42 / 65%);
@@ -113,10 +113,10 @@ async function handleLogout() {
   }
 
   kbd {
-    padding: 2px 8px;
+    padding: 1px 7px;
     border-radius: 999px;
     background: rgb(30 41 59 / 90%);
-    font-size: 12px;
+    font-size: 11px;
     color: #e2e8f0;
   }
 }
@@ -125,10 +125,10 @@ async function handleLogout() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border: 1px solid rgb(148 163 184 / 18%);
-  border-radius: 12px;
+  border-radius: 10px;
   background: rgb(15 23 42 / 72%);
   color: #cbd5e1;
   cursor: pointer;
@@ -151,15 +151,15 @@ async function handleLogout() {
 .user-pill {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 4px 6px 4px 4px;
+  gap: 10px;
+  padding: 3px 4px 3px 3px;
   border: 1px solid rgb(148 163 184 / 18%);
   border-radius: 999px;
   background: rgb(15 23 42 / 72%);
 
   img {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     border-radius: 999px;
     object-fit: cover;
   }
@@ -167,12 +167,12 @@ async function handleLogout() {
   p {
     margin: 0;
     color: #f8fafc;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
   }
 
   span {
-    font-size: 12px;
+    font-size: 11px;
     color: #94a3b8;
     text-transform: uppercase;
   }
@@ -180,7 +180,7 @@ async function handleLogout() {
 
 .header-tabs {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   overflow-x: auto;
 }
 
@@ -188,11 +188,12 @@ async function handleLogout() {
   display: inline-flex;
   align-items: center;
   min-width: max-content;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border: 1px solid rgb(148 163 184 / 12%);
-  border-radius: 14px;
+  border-radius: 12px;
   background: rgb(15 23 42 / 50%);
   color: #94a3b8;
+  font-size: 13px;
   text-decoration: none;
   transition:
     color 0.2s ease,

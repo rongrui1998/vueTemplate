@@ -29,7 +29,7 @@ const rows = [
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding: 24px;
+  padding: 18px;
 }
 
 .demo-header {
@@ -50,7 +50,7 @@ const rows = [
   h1 {
     margin: 10px 0 0;
     color: #f8fafc;
-    font-size: 28px;
+    font-size: 24px;
   }
 }
 

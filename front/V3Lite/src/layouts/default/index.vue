@@ -22,7 +22,7 @@ import AppSidebar from '@/layouts/components/AppSidebar.vue'
 <style scoped lang="scss">
 .layout-shell {
   display: grid;
-  grid-template-columns: 268px minmax(0, 1fr);
+  grid-template-columns: 220px minmax(0, 1fr);
   min-height: 100vh;
   background: #050816;
 }
@@ -40,16 +40,16 @@ import AppSidebar from '@/layouts/components/AppSidebar.vue'
 
 .layout-shell__content {
   flex: 1;
-  padding: 20px 22px 24px;
+  padding: 14px 16px 18px;
 }
 
 .layout-shell__panel {
-  min-height: calc(100vh - 148px);
+  min-height: calc(100vh - 118px);
   border: 1px solid rgb(255 255 255 / 6%);
-  border-radius: 24px;
+  border-radius: 18px;
   background: linear-gradient(180deg, rgb(12 17 29) 0%, rgb(8 12 22) 100%);
   box-shadow:
-    0 24px 60px rgb(2 6 23 / 45%),
+    0 18px 42px rgb(2 6 23 / 45%),
     inset 0 1px 0 rgb(255 255 255 / 4%);
 }
 

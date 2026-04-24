@@ -10,7 +10,7 @@ const crumbs = computed(() =>
 </script>
 
 <template>
-  <div class="flex items-center gap-2 text-sm text-slate-400">
+  <div class="flex items-center gap-2 text-[13px] text-slate-400">
     <span class="text-slate-500">概览</span>
     <template v-for="item in crumbs" :key="item.path">
       <span class="text-slate-600">/</span>

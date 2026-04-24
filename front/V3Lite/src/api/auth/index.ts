@@ -44,14 +44,35 @@ const demoMenus: MenuItem[] = [
   {
     children: [
       {
-        component: 'demo/list',
         meta: {
-          icon: 'Tickets',
-          permissionCode: 'demo:list',
-          title: '表单演示',
+          icon: 'FolderOpened',
+          title: '基础示例',
         },
-        name: 'DemoList',
-        path: '/demo/list',
+        name: 'DemoBasic',
+        path: '/demo/basic',
+        redirect: '/demo/basic/form',
+        children: [
+          {
+            component: 'demo/list',
+            meta: {
+              icon: 'Tickets',
+              permissionCode: 'demo:list',
+              title: '表单演示',
+            },
+            name: 'DemoForm',
+            path: '/demo/basic/form',
+          },
+          {
+            component: 'demo/menu',
+            meta: {
+              icon: 'Document',
+              permissionCode: 'demo:menu',
+              title: '菜单演示',
+            },
+            name: 'DemoMenu',
+            path: '/demo/basic/menu',
+          },
+        ],
       },
     ],
     meta: {
@@ -60,12 +81,12 @@ const demoMenus: MenuItem[] = [
     },
     name: 'Demo',
     path: '/demo',
-    redirect: '/demo/list',
+    redirect: '/demo/basic/form',
   },
 ]
 
 const demoAccessContext: AccessContext = {
-  accessCodes: ['dashboard:view', 'workspace:view', 'demo:list', 'demo:create'],
+  accessCodes: ['dashboard:view', 'workspace:view', 'demo:list', 'demo:create', 'demo:menu'],
   menuTree: demoMenus,
 }
 

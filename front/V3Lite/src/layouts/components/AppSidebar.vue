@@ -1,37 +1,11 @@
 <script setup lang="ts">
-import { Briefcase, DataAnalysis, Grid, Monitor, Operation, Tickets } from '@element-plus/icons-vue'
 import { computed } from 'vue'
-import type { Component } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 
+import SidebarMenuNode from './SidebarMenuNode.vue'
 import { usePermissionStore } from '@/stores/permission'
-
-const iconMap: Record<string, Component> = {
-  Briefcase,
-  DataAnalysis,
-  Grid,
-  Monitor,
-  Operation,
-  Tickets,
-}
-
-const route = useRoute()
-const router = useRouter()
 const permissionStore = usePermissionStore()
 
 const menus = computed(() => permissionStore.menuTree)
-
-function isActive(path: string) {
-  return route.path === path || route.path.startsWith(`${path}/`)
-}
-
-function resolveIcon(icon?: string) {
-  return (icon && iconMap[icon]) || Monitor
-}
-
-function navigate(path: string) {
-  void router.push(path)
-}
 </script>
 
 <template>
@@ -48,28 +22,7 @@ function navigate(path: string) {
     </div>
 
     <div class="sidebar-menu">
-      <section v-for="menu in menus" :key="menu.name" class="menu-group">
-        <div class="menu-group__title">
-          <ElIcon>
-            <component :is="resolveIcon(menu.meta.icon)" />
-          </ElIcon>
-          <span>{{ menu.meta.title }}</span>
-        </div>
-
-        <button
-          v-for="child in menu.children"
-          :key="child.name"
-          class="menu-item"
-          :class="{ 'menu-item--active': isActive(child.path) }"
-          type="button"
-          @click="navigate(child.path)"
-        >
-          <ElIcon class="menu-item__icon">
-            <component :is="resolveIcon(child.meta.icon)" />
-          </ElIcon>
-          <span>{{ child.meta.title }}</span>
-        </button>
-      </section>
+      <SidebarMenuNode v-for="menu in menus" :key="menu.name" :menu="menu" />
     </div>
 
     <div class="sidebar-footer">
@@ -84,8 +37,8 @@ function navigate(path: string) {
   display: flex;
   height: 100vh;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px 16px;
+  gap: 14px;
+  padding: 14px 10px 12px;
   border-right: 1px solid rgb(255 255 255 / 8%);
   background: linear-gradient(180deg, rgb(11 15 25) 0%, rgb(13 18 30) 100%), rgb(10 13 20);
 }
@@ -93,19 +46,19 @@ function navigate(path: string) {
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 8px 10px 18px;
+  gap: 12px;
+  padding: 6px 8px 12px;
 }
 
 .brand-mark {
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
 
   span {
     position: absolute;
     inset: 0;
-    border-radius: 12px;
+    border-radius: 10px;
     transform: rotate(45deg);
 
     &:first-child {
@@ -121,14 +74,14 @@ function navigate(path: string) {
 
 .brand-title {
   margin: 0;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 700;
   color: #f8fafc;
 }
 
 .brand-subtitle {
   margin: 2px 0 0;
-  font-size: 12px;
+  font-size: 10px;
   color: #64748b;
 }
 
@@ -136,72 +89,19 @@ function navigate(path: string) {
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
   overflow-y: auto;
-}
-
-.menu-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.menu-group__title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  color: #e2e8f0;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid transparent;
-  border-radius: 14px;
-  background: transparent;
-  color: #94a3b8;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-
-  &:hover {
-    color: #f8fafc;
-    border-color: rgb(59 130 246 / 24%);
-    background: rgb(30 41 59 / 55%);
-    transform: translateX(2px);
-  }
-}
-
-.menu-item--active {
-  color: #f8fafc;
-  border-color: rgb(148 163 184 / 18%);
-  background: linear-gradient(180deg, rgb(33 41 57) 0%, rgb(26 33 47) 100%);
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 4%);
-}
-
-.menu-item__icon {
-  color: inherit;
 }
 
 .sidebar-footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
-  border-radius: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
   background: rgb(15 23 42 / 80%);
   color: #94a3b8;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .status-dot {

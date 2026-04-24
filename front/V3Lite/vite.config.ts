@@ -17,11 +17,19 @@ export default defineConfig({
     AutoImport({
       dts: true,
       imports: ['vue', 'vue-router', 'pinia'],
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: false,
+        }),
+      ],
     }),
     Components({
       dts: true,
-      resolvers: [ElementPlusResolver()],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: false,
+        }),
+      ],
     }),
   ],
   test: {

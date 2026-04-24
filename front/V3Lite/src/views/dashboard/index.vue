@@ -80,8 +80,8 @@ const sourceCards = [
 .dashboard-page {
   display: flex;
   flex-direction: column;
-  gap: 22px;
-  padding: 24px;
+  gap: 18px;
+  padding: 18px;
 }
 
 .hero-banner {
@@ -89,9 +89,9 @@ const sourceCards = [
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
-  padding: 24px;
+  padding: 20px;
   border: 1px solid rgb(255 255 255 / 6%);
-  border-radius: 24px;
+  border-radius: 18px;
   background:
     radial-gradient(circle at top right, rgb(59 130 246 / 22%), transparent 26%),
     linear-gradient(180deg, rgb(17 24 39) 0%, rgb(12 18 30) 100%);
@@ -110,7 +110,7 @@ const sourceCards = [
   margin: 10px 0 0;
   max-width: 780px;
   color: #f8fafc;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 1.25;
 }
 
@@ -123,7 +123,7 @@ const sourceCards = [
 
 .hero-banner__meta {
   display: flex;
-  min-width: 220px;
+  min-width: 200px;
   flex-direction: column;
   gap: 8px;
   padding: 18px;
@@ -147,25 +147,25 @@ const sourceCards = [
 .source-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: 14px;
 }
 
 .stat-card,
 .source-card,
 .trend-panel {
   border: 1px solid rgb(255 255 255 / 6%);
-  border-radius: 22px;
+  border-radius: 18px;
   background: rgb(12 18 30 / 92%);
 }
 
 .stat-card {
-  padding: 22px;
+  padding: 18px;
 
   strong {
     display: inline-block;
-    margin-top: 24px;
+    margin-top: 18px;
     color: #f8fafc;
-    font-size: 40px;
+    font-size: 34px;
     line-height: 1;
   }
 
@@ -188,7 +188,7 @@ const sourceCards = [
   align-items: center;
   justify-content: space-between;
   color: #e2e8f0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -201,7 +201,7 @@ const sourceCards = [
 }
 
 .trend-panel {
-  padding: 22px;
+  padding: 18px;
 }
 
 .trend-panel__header {
@@ -221,8 +221,8 @@ const sourceCards = [
 .trend-chip {
   display: inline-flex;
   margin-right: 10px;
-  padding: 10px 14px;
-  border-radius: 14px;
+  padding: 8px 12px;
+  border-radius: 12px;
   background: rgb(15 23 42 / 80%);
   color: #94a3b8;
 }
@@ -270,7 +270,7 @@ const sourceCards = [
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 22px;
+  padding: 18px;
 
   p {
     margin: 0;
@@ -279,7 +279,7 @@ const sourceCards = [
 
   strong {
     color: #f8fafc;
-    font-size: 34px;
+    font-size: 30px;
     line-height: 1.1;
   }
 
