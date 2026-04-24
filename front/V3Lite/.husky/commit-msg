@@ -1,0 +1,6 @@
+#!/bin/sh
+
+message_file="$(realpath "$1")"
+
+cd front/V3Lite || exit 1
+pnpm commitlint --edit "$message_file"

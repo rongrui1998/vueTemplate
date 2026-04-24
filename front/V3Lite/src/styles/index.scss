@@ -1,0 +1,32 @@
+@use './variables.scss';
+
+:root {
+  color: #0f172a;
+  background: #f3f6fb;
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgb(95 115 246 / 18%), transparent 32%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef2f8 100%);
+}
+
+#app {
+  min-height: 100vh;
+}
