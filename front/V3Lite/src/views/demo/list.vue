@@ -109,6 +109,7 @@ function submitForm() {
       <ElButton
         v-if="canCreate"
         data-testid="create-button"
+        class="create-record-btn"
         type="primary"
         @click="openCreateDialog"
       >
@@ -116,7 +117,14 @@ function submitForm() {
       </ElButton>
     </div>
 
-    <section class="panel-shell">
+    <section data-testid="query-panel" class="panel-shell query-shell">
+      <div class="query-shell__header">
+        <div>
+          <p>筛选条件</p>
+          <span>按关键词和状态快速缩小结果范围，适合标准后台列表页的查询区模板。</span>
+        </div>
+      </div>
+
       <div class="query-grid">
         <div data-testid="keyword-input">
           <ElInput v-model="filters.keyword" placeholder="搜索名称或负责人" clearable />
@@ -144,13 +152,16 @@ function submitForm() {
       </div>
     </section>
 
-    <section class="panel-shell">
+    <section class="panel-shell table-shell">
       <div class="table-toolbar">
-        <div>
-          <strong>{{ filteredRows.length }}</strong>
-          <span>条结果</span>
+        <div class="table-toolbar__summary">
+          <div data-testid="result-chip" class="result-chip">
+            <strong>{{ filteredRows.length }}</strong>
+            <span>条结果</span>
+          </div>
+          <span class="table-toolbar__hint">支持后续扩成系统管理、用户管理等标准后台列表页</span>
         </div>
-        <p>适合作为系统管理、用户管理等列表页基础模板</p>
+        <p>最近更新时间：今天</p>
       </div>
 
       <ElTable :data="pagedRows">
@@ -165,8 +176,16 @@ function submitForm() {
         <ElTableColumn label="操作" min-width="160" fixed="right">
           <template #default>
             <div class="table-actions">
-              <ElButton text type="primary">编辑</ElButton>
-              <ElButton v-permission="'demo:create'" text type="warning">更多操作</ElButton>
+              <button data-testid="edit-action" type="button" class="table-action-link">
+                编辑
+              </button>
+              <button
+                v-permission="'demo:create'"
+                type="button"
+                class="table-action-link table-action-link--accent"
+              >
+                更多操作
+              </button>
             </div>
           </template>
         </ElTableColumn>
@@ -252,11 +271,47 @@ function submitForm() {
   }
 }
 
+.create-record-btn {
+  min-width: 118px;
+  height: 42px;
+  border-color: rgb(59 130 246 / 60%);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(55 125 231) 0%, rgb(40 96 194) 100%);
+  box-shadow:
+    0 12px 24px rgb(37 99 235 / 16%),
+    inset 0 1px 0 rgb(255 255 255 / 18%);
+  font-weight: 600;
+}
+
 .panel-shell {
   padding: 16px;
   border: 1px solid rgb(255 255 255 / 6%);
   border-radius: 16px;
   background: rgb(12 18 30 / 92%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 2%);
+}
+
+.query-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.query-shell__header {
+  p {
+    margin: 0;
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  span {
+    display: inline-block;
+    margin-top: 6px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.7;
+  }
 }
 
 .query-grid {
@@ -270,6 +325,12 @@ function submitForm() {
   display: flex;
   gap: 10px;
   justify-content: flex-end;
+}
+
+.table-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 :deep(.query-button) {
@@ -317,24 +378,45 @@ function submitForm() {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
+  gap: 16px;
+  padding: 2px 2px 0;
 
-  div {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
+  p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
   }
+}
+
+.table-toolbar__summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-toolbar__hint {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.result-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid rgb(96 165 250 / 14%);
+  border-radius: 999px;
+  background: rgb(18 30 49 / 78%);
 
   strong {
     color: #f8fafc;
-    font-size: 28px;
+    font-size: 18px;
     line-height: 1;
   }
 
-  span,
-  p {
-    margin: 0;
+  span {
     color: #94a3b8;
+    font-size: 12px;
   }
 }
 
@@ -349,6 +431,33 @@ function submitForm() {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.table-action-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #4ea1ff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+
+  &:hover {
+    color: #7cc0ff;
+  }
+}
+
+.table-action-link--accent {
+  color: #ffbf47;
+
+  &:hover {
+    color: #ffd277;
+  }
 }
 
 .status-pill {
@@ -447,10 +556,15 @@ function submitForm() {
 
 :deep(.el-input__wrapper),
 :deep(.el-select__wrapper) {
-  min-height: 38px;
+  min-height: 42px;
   border-radius: 12px;
   background: rgb(15 23 42 / 88%);
   box-shadow: inset 0 0 0 1px rgb(148 163 184 / 14%);
+}
+
+:deep(.el-input__wrapper:hover),
+:deep(.el-select__wrapper:hover) {
+  box-shadow: inset 0 0 0 1px rgb(96 165 250 / 24%);
 }
 
 :deep(.el-table) {
@@ -463,6 +577,21 @@ function submitForm() {
 
   border-radius: 16px;
   overflow: hidden;
+}
+
+:deep(.el-table th.el-table__cell) {
+  padding: 14px 0;
+  color: #a8b4c8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+:deep(.el-table td.el-table__cell) {
+  padding: 18px 0;
+}
+
+:deep(.el-table .el-table__row:nth-child(even) td.el-table__cell) {
+  background: rgb(24 33 51 / 44%);
 }
 
 :deep(.el-dialog) {
@@ -493,6 +622,11 @@ function submitForm() {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+  }
+
+  .table-toolbar__summary {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

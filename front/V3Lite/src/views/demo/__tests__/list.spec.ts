@@ -62,6 +62,9 @@ describe('DemoListPage', () => {
 
     expect(wrapper.find('[data-testid="table-pagination"]').classes()).toContain('table-pagination')
     expect(wrapper.find('.demo-pagination').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="query-panel"]').classes()).toContain('query-shell')
+    expect(wrapper.find('[data-testid="result-chip"]').classes()).toContain('result-chip')
+    expect(wrapper.text()).toContain('编辑')
     expect(wrapper.find('[data-testid="search-button"]').classes()).toContain('query-button')
     expect(wrapper.find('[data-testid="search-button"]').classes()).toContain(
       'query-button--primary',
