@@ -62,5 +62,13 @@ describe('DemoListPage', () => {
 
     expect(wrapper.find('[data-testid="table-pagination"]').classes()).toContain('table-pagination')
     expect(wrapper.find('.demo-pagination').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="search-button"]').classes()).toContain('query-button')
+    expect(wrapper.find('[data-testid="search-button"]').classes()).toContain(
+      'query-button--primary',
+    )
+    expect(wrapper.find('[data-testid="reset-button"]').classes()).toContain('query-button')
+    expect(wrapper.find('[data-testid="reset-button"]').classes()).toContain(
+      'query-button--secondary',
+    )
   })
 })

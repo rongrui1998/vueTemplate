@@ -125,10 +125,21 @@ function submitForm() {
           <ElOption v-for="item in statusOptions" :key="item" :label="item" :value="item" />
         </ElSelect>
         <div class="query-actions">
-          <ElButton data-testid="search-button" type="primary" plain @click="applyFilters">
+          <ElButton
+            data-testid="search-button"
+            class="query-button query-button--primary"
+            type="primary"
+            @click="applyFilters"
+          >
             查询
           </ElButton>
-          <ElButton @click="resetFilters">重置</ElButton>
+          <ElButton
+            data-testid="reset-button"
+            class="query-button query-button--secondary"
+            @click="resetFilters"
+          >
+            重置
+          </ElButton>
         </div>
       </div>
     </section>
@@ -261,6 +272,47 @@ function submitForm() {
   justify-content: flex-end;
 }
 
+:deep(.query-button) {
+  min-width: 104px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+:deep(.query-button--primary) {
+  border-color: rgb(59 130 246 / 58%);
+  background: linear-gradient(180deg, rgb(55 125 231) 0%, rgb(40 96 194) 100%);
+  box-shadow:
+    0 10px 24px rgb(37 99 235 / 18%),
+    inset 0 1px 0 rgb(255 255 255 / 16%);
+  color: #eff6ff;
+}
+
+:deep(.query-button--primary:hover) {
+  border-color: rgb(96 165 250 / 72%);
+  background: linear-gradient(180deg, rgb(69 137 241) 0%, rgb(47 108 212) 100%);
+  color: #fff;
+}
+
+:deep(.query-button--secondary) {
+  border-color: rgb(71 85 105 / 42%);
+  background: linear-gradient(180deg, rgb(28 38 56) 0%, rgb(20 29 44) 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%);
+  color: #cbd5e1;
+}
+
+:deep(.query-button--secondary:hover) {
+  border-color: rgb(96 165 250 / 28%);
+  background: linear-gradient(180deg, rgb(33 45 66) 0%, rgb(24 34 52) 100%);
+  color: #f8fafc;
+}
+
 .table-toolbar {
   display: flex;
   align-items: center;
@@ -350,7 +402,8 @@ function submitForm() {
   transition:
     border-color 0.2s ease,
     color 0.2s ease,
-    background-color 0.2s ease;
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 :deep(.demo-pagination .btn-prev:hover),
@@ -361,9 +414,16 @@ function submitForm() {
   background: linear-gradient(180deg, rgb(25 36 58) 0%, rgb(18 28 45) 100%);
 }
 
+:deep(.demo-pagination.is-background .btn-prev),
+:deep(.demo-pagination.is-background .btn-next),
+:deep(.demo-pagination.is-background .el-pager li) {
+  background: linear-gradient(180deg, rgb(20 28 44) 0%, rgb(15 22 36) 100%);
+}
+
 :deep(.demo-pagination .el-pager li.is-active) {
   border-color: rgb(96 165 250 / 48%);
   background: linear-gradient(180deg, rgb(39 94 179) 0%, rgb(31 77 149) 100%);
+  box-shadow: 0 8px 18px rgb(37 99 235 / 16%);
   color: #eff6ff;
 }
 
