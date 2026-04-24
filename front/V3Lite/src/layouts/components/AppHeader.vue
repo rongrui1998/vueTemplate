@@ -236,7 +236,7 @@ function resolveMenuIcon(icon?: string) {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  min-height: 58px;
+  min-height: 46px;
   border-top: 1px solid rgb(255 255 255 / 2%);
 }
 
@@ -259,13 +259,14 @@ function resolveMenuIcon(icon?: string) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
   min-width: max-content;
-  padding: 0 18px;
+  padding: 0 16px;
   border-right: 1px solid rgb(255 255 255 / 8%);
   background: transparent;
   color: #cbd5e1;
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1;
   text-decoration: none;
   transition:
     color 0.2s ease,
@@ -280,12 +281,12 @@ function resolveMenuIcon(icon?: string) {
 .tab-link__main {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 
 .tab-link__menu-icon,
 .tab-link__meta-icon {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .tab-link__meta-icon {
@@ -301,7 +302,7 @@ function resolveMenuIcon(icon?: string) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
+  width: 50px;
   border: 0;
   border-left: 1px solid rgb(255 255 255 / 8%);
   background: transparent;
