@@ -56,4 +56,11 @@ describe('DemoListPage', () => {
 
     expect(wrapper.find('[data-testid="create-button"]').exists()).toBe(false)
   })
+
+  it('renders the custom dark pagination shell', () => {
+    const wrapper = mountPage()
+
+    expect(wrapper.find('[data-testid="table-pagination"]').classes()).toContain('table-pagination')
+    expect(wrapper.find('.demo-pagination').exists()).toBe(true)
+  })
 })

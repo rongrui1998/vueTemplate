@@ -161,9 +161,11 @@ function submitForm() {
         </ElTableColumn>
       </ElTable>
 
-      <div class="table-pagination">
+      <div data-testid="table-pagination" class="table-pagination">
         <ElPagination
           v-model:current-page="pagination.page"
+          class="demo-pagination"
+          background
           :page-size="pagination.pageSize"
           layout="prev, pager, next"
           :total="filteredRows.length"
@@ -287,7 +289,8 @@ function submitForm() {
 .table-pagination {
   display: flex;
   justify-content: flex-end;
-  margin-top: 14px;
+  margin-top: 16px;
+  padding-top: 2px;
 }
 
 .table-actions {
@@ -318,6 +321,62 @@ function submitForm() {
 .status-pill--已完成 {
   background: rgb(34 197 94 / 18%);
   color: #86efac;
+}
+
+:deep(.demo-pagination) {
+  --el-pagination-bg-color: transparent;
+  --el-pagination-button-color: #cbd5e1;
+  --el-pagination-button-disabled-bg-color: rgb(15 23 42 / 46%);
+  --el-pagination-button-disabled-color: #64748b;
+  --el-pagination-hover-color: #f8fafc;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:deep(.demo-pagination .btn-prev),
+:deep(.demo-pagination .btn-next),
+:deep(.demo-pagination .el-pager li) {
+  min-width: 38px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgb(148 163 184 / 14%);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgb(20 28 44) 0%, rgb(15 22 36) 100%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+  color: #cbd5e1;
+  font-weight: 600;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+:deep(.demo-pagination .btn-prev:hover),
+:deep(.demo-pagination .btn-next:hover),
+:deep(.demo-pagination .el-pager li:hover) {
+  border-color: rgb(96 165 250 / 30%);
+  color: #f8fafc;
+  background: linear-gradient(180deg, rgb(25 36 58) 0%, rgb(18 28 45) 100%);
+}
+
+:deep(.demo-pagination .el-pager li.is-active) {
+  border-color: rgb(96 165 250 / 48%);
+  background: linear-gradient(180deg, rgb(39 94 179) 0%, rgb(31 77 149) 100%);
+  color: #eff6ff;
+}
+
+:deep(.demo-pagination .btn-prev:disabled),
+:deep(.demo-pagination .btn-next:disabled) {
+  border-color: rgb(71 85 105 / 18%);
+  background: rgb(15 23 42 / 48%);
+  box-shadow: none;
+}
+
+:deep(.demo-pagination .btn-prev .el-icon),
+:deep(.demo-pagination .btn-next .el-icon) {
+  font-size: 13px;
 }
 
 .dialog-footer {
