@@ -1,11 +1,96 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 import SidebarMenuNode from './SidebarMenuNode.vue'
+import type { MenuItem } from '@/types/permission'
 import { usePermissionStore } from '@/stores/permission'
+
 const permissionStore = usePermissionStore()
+const route = useRoute()
 
 const menus = computed(() => permissionStore.menuTree)
+const openKeys = ref<Record<number, string | null>>({})
+
+function collectOpenKeysByPath(
+  items: MenuItem[],
+  targetPath: string,
+  level = 0,
+): Record<number, string | null> {
+  for (const item of items) {
+    if (!item.children?.length) {
+      continue
+    }
+
+    const isCurrentBranch = targetPath.startsWith(`${item.path}/`)
+
+    if (!isCurrentBranch) {
+      continue
+    }
+
+    return {
+      [level]: item.path,
+      ...collectOpenKeysByPath(item.children, targetPath, level + 1),
+    }
+  }
+
+  return {}
+}
+
+function clearDeeperLevels(level: number) {
+  const nextOpenKeys = { ...openKeys.value }
+
+  Object.keys(nextOpenKeys).forEach((key) => {
+    if (Number(key) > level) {
+      delete nextOpenKeys[Number(key)]
+    }
+  })
+
+  openKeys.value = nextOpenKeys
+}
+
+function expandLevel(level: number, path: string) {
+  if (openKeys.value[level] === path) {
+    return
+  }
+
+  openKeys.value = {
+    ...openKeys.value,
+    [level]: path,
+  }
+  clearDeeperLevels(level)
+}
+
+function collapseLevel(level: number) {
+  openKeys.value = {
+    ...openKeys.value,
+    [level]: null,
+  }
+  clearDeeperLevels(level)
+}
+
+function toggleLevel(level: number, path: string) {
+  if (openKeys.value[level] === path) {
+    collapseLevel(level)
+    return
+  }
+
+  expandLevel(level, path)
+}
+
+function isExpanded(level: number, path: string) {
+  return openKeys.value[level] === path
+}
+
+watch(
+  [menus, () => route.path],
+  ([currentMenus, currentPath]) => {
+    openKeys.value = collectOpenKeysByPath(currentMenus, currentPath)
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
 
 <template>
@@ -22,7 +107,14 @@ const menus = computed(() => permissionStore.menuTree)
     </div>
 
     <div class="sidebar-menu">
-      <SidebarMenuNode v-for="menu in menus" :key="menu.name" :menu="menu" />
+      <SidebarMenuNode
+        v-for="menu in menus"
+        :key="menu.name"
+        :is-expanded="isExpanded"
+        :menu="menu"
+        :toggle-level="toggleLevel"
+        :open-keys="openKeys"
+      />
     </div>
 
     <div class="sidebar-footer">

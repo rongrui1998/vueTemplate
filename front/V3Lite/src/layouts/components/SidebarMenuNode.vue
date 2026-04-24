@@ -15,7 +15,7 @@ import {
   Operation,
   Tickets,
 } from '@element-plus/icons-vue'
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import type { Component } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -23,8 +23,11 @@ import type { MenuItem } from '@/types/permission'
 
 const props = withDefaults(
   defineProps<{
+    isExpanded: (level: number, path: string) => boolean
     level?: number
     menu: MenuItem
+    openKeys: Record<number, string | null>
+    toggleLevel: (level: number, path: string) => void
   }>(),
   {
     level: 0,
@@ -47,20 +50,8 @@ const router = useRouter()
 
 const hasChildren = computed(() => Boolean(props.menu.children?.length))
 const isLeaf = computed(() => !hasChildren.value)
-const activeBranch = computed(
-  () => route.path === props.menu.path || route.path.startsWith(`${props.menu.path}/`),
-)
-const expanded = ref(false)
-
-watch(
-  activeBranch,
-  (value) => {
-    if (value) {
-      expanded.value = true
-    }
-  },
-  { immediate: true },
-)
+const isLeafActive = computed(() => isLeaf.value && route.path === props.menu.path)
+const expanded = computed(() => hasChildren.value && props.isExpanded(props.level, props.menu.path))
 
 function resolveIcon(icon?: string) {
   return (icon && iconMap[icon]) || Monitor
@@ -68,7 +59,7 @@ function resolveIcon(icon?: string) {
 
 function handleAction() {
   if (hasChildren.value) {
-    expanded.value = !expanded.value
+    props.toggleLevel(props.level, props.menu.path)
     return
   }
 
@@ -82,8 +73,7 @@ function handleAction() {
       type="button"
       class="menu-button"
       :class="{
-        'menu-button--active': isLeaf && activeBranch,
-        'menu-button--branch-active': hasChildren && activeBranch,
+        'menu-button--active': isLeafActive,
         'menu-button--branch-open': hasChildren && expanded,
       }"
       @click="handleAction"
@@ -104,8 +94,11 @@ function handleAction() {
       <SidebarMenuNode
         v-for="child in menu.children"
         :key="child.name"
+        :is-expanded="isExpanded"
         :menu="child"
         :level="level + 1"
+        :open-keys="openKeys"
+        :toggle-level="toggleLevel"
       />
     </div>
   </div>
@@ -167,15 +160,16 @@ function handleAction() {
   font-size: 13px;
 }
 
-.menu-button--active,
-.menu-button--branch-open {
+.menu-button--active {
   color: #f8fafc;
   border-color: rgb(148 163 184 / 14%);
   background: linear-gradient(180deg, rgb(32 41 58) 0%, rgb(23 31 45) 100%);
 }
 
-.menu-button--branch-active {
-  color: #dbeafe;
+.menu-button--branch-open {
+  .menu-button__arrow {
+    color: #cbd5e1;
+  }
 }
 
 .menu-node--level-0 > .menu-button {
