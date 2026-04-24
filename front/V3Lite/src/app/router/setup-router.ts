@@ -2,7 +2,7 @@ import { getActivePinia } from 'pinia'
 import type { App } from 'vue'
 import type { NavigationGuardWithThis, RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
-import { FORBIDDEN_ROUTE_PATH, LOGIN_ROUTE_PATH } from '@/constants/app'
+import { FORBIDDEN_ROUTE_PATH, LOGIN_ROUTE_PATH, NOT_FOUND_ROUTE_PATH } from '@/constants/app'
 import { router } from '@/router'
 import { pinia } from '@/stores'
 import { usePermissionStore } from '@/stores/permission'
@@ -13,6 +13,32 @@ function hasRoutePermission(
   permissionStore: ReturnType<typeof usePermissionStore>,
 ) {
   return permissionStore.hasPermission(to.meta.permissionCode as string | undefined)
+}
+
+function isResolvedNotFound(targetPath: string, routerInstance: Router) {
+  const resolved = routerInstance.resolve(targetPath)
+
+  return resolved.path === NOT_FOUND_ROUTE_PATH || resolved.name === 'NotFound'
+}
+
+function resolveRetryPath(
+  to: RouteLocationNormalizedLoaded,
+  routerInstance: Router,
+  permissionStore: ReturnType<typeof usePermissionStore>,
+) {
+  const redirectedPath = to.redirectedFrom?.fullPath
+
+  if (redirectedPath) {
+    return isResolvedNotFound(redirectedPath, routerInstance)
+      ? NOT_FOUND_ROUTE_PATH
+      : redirectedPath
+  }
+
+  if (to.path === NOT_FOUND_ROUTE_PATH) {
+    return NOT_FOUND_ROUTE_PATH
+  }
+
+  return isResolvedNotFound(to.fullPath, routerInstance) ? permissionStore.homePath : to.fullPath
 }
 
 export function createRouteGuard(routerInstance: Router): NavigationGuardWithThis<undefined> {
@@ -35,7 +61,7 @@ export function createRouteGuard(routerInstance: Router): NavigationGuardWithThi
 
     if (!permissionStore.routesReady) {
       await permissionStore.initializeAccess(routerInstance)
-      return to.fullPath
+      return resolveRetryPath(to, routerInstance, permissionStore)
     }
 
     if (!hasRoutePermission(to, permissionStore) && to.path !== FORBIDDEN_ROUTE_PATH) {

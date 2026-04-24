@@ -51,4 +51,36 @@ describe('route guard', () => {
 
     expect(result).toBe(FORBIDDEN_ROUTE_PATH)
   })
+
+  it('restores the intended dynamic route after access initialization', async () => {
+    setActivePinia(createPinia())
+
+    const router = createAppRouter(createMemoryHistory())
+    router.beforeEach(createRouteGuard(router))
+
+    const userStore = useUserStore()
+    setAccessToken('token-demo')
+    userStore.accessToken = 'token-demo'
+
+    await router.push('/')
+    await router.isReady()
+
+    expect(router.currentRoute.value.path).toBe('/overview/analytics')
+  })
+
+  it('keeps unknown routes on 404 after access initialization', async () => {
+    setActivePinia(createPinia())
+
+    const router = createAppRouter(createMemoryHistory())
+    router.beforeEach(createRouteGuard(router))
+
+    const userStore = useUserStore()
+    setAccessToken('token-demo')
+    userStore.accessToken = 'token-demo'
+
+    await router.push('/not-existing-page')
+    await router.isReady()
+
+    expect(router.currentRoute.value.path).toBe('/404')
+  })
 })
