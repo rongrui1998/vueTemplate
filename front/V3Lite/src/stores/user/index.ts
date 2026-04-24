@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 
+import { useTabsStore } from '@/stores/tabs'
 import type { LoginPayload } from '@/types/api'
 import type { UserInfo } from '@/types/permission'
 
@@ -34,7 +35,10 @@ export const useUserStore = defineStore('user', {
       }
     },
     logout() {
+      const tabsStore = useTabsStore()
+
       clearAccessToken()
+      tabsStore.reset()
       this.accessToken = ''
       this.userInfo = null
     },

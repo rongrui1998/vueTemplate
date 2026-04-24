@@ -6,6 +6,7 @@ import { FORBIDDEN_ROUTE_PATH, LOGIN_ROUTE_PATH, NOT_FOUND_ROUTE_PATH } from '@/
 import { router } from '@/router'
 import { pinia } from '@/stores'
 import { usePermissionStore } from '@/stores/permission'
+import { useTabsStore } from '@/stores/tabs'
 import { useUserStore } from '@/stores/user'
 
 function hasRoutePermission(
@@ -74,6 +75,12 @@ export function createRouteGuard(routerInstance: Router): NavigationGuardWithThi
 
 function setupGuards() {
   router.beforeEach(createRouteGuard(router))
+  router.afterEach((to) => {
+    const activePinia = getActivePinia() ?? pinia
+    const tabsStore = useTabsStore(activePinia)
+
+    tabsStore.syncRoute(to)
+  })
 }
 
 export async function setupRouter(app: App<Element>) {

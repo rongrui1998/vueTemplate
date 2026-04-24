@@ -18,12 +18,15 @@ import {
   Tickets,
 } from '@element-plus/icons-vue'
 import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import AppBreadcrumb from './AppBreadcrumb.vue'
-import { usePermissionStore } from '@/stores/permission'
+import { useTabsStore } from '@/stores/tabs'
 import { useUserStore } from '@/stores/user'
 
-const permissionStore = usePermissionStore()
+const route = useRoute()
+const router = useRouter()
+const tabsStore = useTabsStore()
 const userStore = useUserStore()
 
 const topLeadingActions = [Fold, RefreshRight]
@@ -38,10 +41,18 @@ const iconMap = {
   Tickets,
 }
 
-const tabs = computed(() => permissionStore.flatLeafMenus)
+const tabs = computed(() => tabsStore.items)
 
 function resolveMenuIcon(icon?: string) {
   return icon ? (iconMap[icon as keyof typeof iconMap] ?? Document) : Document
+}
+
+async function handleCloseTab(path: string) {
+  await tabsStore.closeTab({
+    currentPath: route.path,
+    path,
+    router,
+  })
 }
 </script>
 
@@ -96,17 +107,25 @@ function resolveMenuIcon(icon?: string) {
         >
           <span class="tab-link__main">
             <ElIcon class="tab-link__menu-icon">
-              <component :is="resolveMenuIcon(item.meta.icon)" />
+              <component :is="resolveMenuIcon(item.icon)" />
             </ElIcon>
-            <span>{{ item.meta.title }}</span>
+            <span>{{ item.title }}</span>
           </span>
 
-          <ElIcon v-if="item.meta.affix" data-test="tab-affix" class="tab-link__meta-icon">
+          <ElIcon v-if="item.affix" data-test="tab-affix" class="tab-link__meta-icon">
             <CollectionTag />
           </ElIcon>
-          <ElIcon v-else data-test="tab-close" class="tab-link__meta-icon">
-            <Close />
-          </ElIcon>
+          <button
+            v-else
+            type="button"
+            data-test="tab-close"
+            class="tab-close-btn"
+            @click.prevent.stop="handleCloseTab(item.path)"
+          >
+            <ElIcon class="tab-link__meta-icon">
+              <Close />
+            </ElIcon>
+          </button>
         </RouterLink>
       </div>
 
@@ -236,7 +255,7 @@ function resolveMenuIcon(icon?: string) {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  min-height: 46px;
+  min-height: 36px;
   border-top: 1px solid rgb(255 255 255 / 2%);
 }
 
@@ -291,6 +310,16 @@ function resolveMenuIcon(icon?: string) {
 
 .tab-link__meta-icon {
   color: #9aa6bc;
+}
+
+.tab-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 .tab-link--active {

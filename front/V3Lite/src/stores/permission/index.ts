@@ -5,6 +5,7 @@ import { defineStore } from 'pinia'
 import { DEFAULT_HOME_PATH, ROOT_ROUTE_NAME } from '@/constants/app'
 import { fetchCurrentAccessContext } from '@/modules/auth/service'
 import { transformMenusToRoutes } from '@/router/transform/menu-to-routes'
+import { useTabsStore } from '@/stores/tabs'
 import type { MenuItem, PermissionCode } from '@/types/permission'
 
 function flattenLeaves(menus: MenuItem[]): MenuItem[] {
@@ -42,9 +43,20 @@ export const usePermissionStore = defineStore('permission', {
       }
 
       const accessContext = await fetchCurrentAccessContext()
+      const tabsStore = useTabsStore()
+
       this.accessCodes = accessContext.accessCodes
       this.menuTree = accessContext.menuTree
       this.applyDynamicRoutes(router)
+      tabsStore.initializeAffixTabs(
+        flattenLeaves(this.menuTree).map((menu) => ({
+          affix: Boolean(menu.meta.affix),
+          icon: menu.meta.icon,
+          name: menu.name,
+          path: menu.path,
+          title: menu.meta.title,
+        })),
+      )
       this.routesReady = true
     },
     resetAccess(router?: Router) {
