@@ -76,7 +76,7 @@ describe('DemoListPage', () => {
     expect(wrapper.find('[data-testid="create-button"]').exists()).toBe(false)
   })
 
-  it('renders the custom dark pagination shell', () => {
+  it('renders the themed pagination shell', () => {
     const wrapper = mountPage()
 
     expect(wrapper.find('[data-testid="table-pagination"]').classes()).toContain('table-pagination')

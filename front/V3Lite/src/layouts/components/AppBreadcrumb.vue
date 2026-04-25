@@ -27,12 +27,12 @@ const crumbs = computed(() =>
   align-items: center;
   gap: 10px;
   overflow: hidden;
-  color: #8ea0ba;
+  color: var(--app-text-muted);
   font-size: 13px;
 }
 
 .breadcrumb-separator {
-  color: #51617a;
+  color: var(--app-text-subtle);
   flex-shrink: 0;
 }
 
@@ -43,7 +43,7 @@ const crumbs = computed(() =>
 }
 
 .breadcrumb-shell :last-child {
-  color: #f8fafc;
+  color: var(--app-text-primary);
   font-weight: 600;
 }
 </style>

@@ -13,17 +13,19 @@ const timeline = [
 </script>
 
 <template>
-  <section class="workspace-page">
-    <div class="workspace-grid">
-      <article class="workspace-card workspace-card--feature">
-        <p>Workspace</p>
-        <h1>这里会作为项目总览页，承接快捷入口和协作状态。</h1>
-        <span>当前先用静态内容把结构建立起来，后面再结合业务脚手架继续扩展。</span>
+  <section class="app-page workspace-page">
+    <div class="app-grid-2 workspace-grid">
+      <article class="app-panel app-panel--feature workspace-card">
+        <p class="app-page-eyebrow">Workspace</p>
+        <h1 class="app-page-title">这里会作为项目总览页，承接快捷入口和协作状态。</h1>
+        <span class="app-page-description"
+          >当前先用静态内容把结构建立起来，后面再结合业务脚手架继续扩展。</span
+        >
       </article>
 
-      <article class="workspace-card">
-        <p>本周推进</p>
-        <ul>
+      <article class="app-panel workspace-card">
+        <p class="app-page-eyebrow">本周推进</p>
+        <ul class="app-panel-list">
           <li v-for="item in timeline" :key="item">
             {{ item }}
           </li>
@@ -31,14 +33,14 @@ const timeline = [
       </article>
     </div>
 
-    <article class="workspace-table">
-      <div class="workspace-table__head">
+    <article class="app-panel app-table-panel workspace-table">
+      <div class="app-table-head workspace-table__head">
         <h2>项目看板</h2>
-        <span>三条示例数据</span>
+        <span class="app-panel-meta">三条示例数据</span>
       </div>
 
-      <div class="workspace-table__list">
-        <div v-for="project in projects" :key="project.name" class="workspace-row">
+      <div class="app-table-list workspace-table__list">
+        <div v-for="project in projects" :key="project.name" class="app-table-row workspace-row">
           <strong>{{ project.name }}</strong>
           <span>{{ project.owner }}</span>
           <span>{{ project.status }}</span>
@@ -50,112 +52,18 @@ const timeline = [
 </template>
 
 <style scoped lang="scss">
-.workspace-page {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 18px;
-}
-
-.workspace-grid {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr;
-  gap: 14px;
-}
-
-.workspace-card,
-.workspace-table {
-  border: 1px solid rgb(255 255 255 / 6%);
-  border-radius: 18px;
-  background: rgb(12 18 30 / 92%);
-}
-
 .workspace-card {
-  padding: 18px;
-
-  p {
-    margin: 0;
-    color: #60a5fa;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .app-page-title,
+  .app-page-description {
+    max-width: 24ch;
   }
-
-  h1 {
-    margin: 12px 0 0;
-    color: #f8fafc;
-    font-size: 26px;
-    line-height: 1.35;
-  }
-
-  span {
-    display: inline-block;
-    margin-top: 14px;
-    color: #94a3b8;
-    line-height: 1.8;
-  }
-
-  ul {
-    margin: 18px 0 0;
-    padding-left: 18px;
-    color: #cbd5e1;
-    line-height: 2;
-  }
-}
-
-.workspace-card--feature {
-  background:
-    radial-gradient(circle at top right, rgb(34 211 238 / 18%), transparent 20%),
-    linear-gradient(180deg, rgb(17 24 39) 0%, rgb(12 18 30) 100%);
-}
-
-.workspace-table {
-  padding: 18px;
-}
-
-.workspace-table__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h2 {
-    margin: 0;
-    color: #f8fafc;
-  }
-
-  span {
-    color: #64748b;
-  }
-}
-
-.workspace-table__list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 18px;
 }
 
 .workspace-row {
-  display: grid;
   grid-template-columns: 2fr repeat(3, 1fr);
-  gap: 12px;
-  align-items: center;
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: rgb(15 23 42 / 72%);
-  color: #94a3b8;
-
-  strong {
-    color: #f8fafc;
-  }
 }
 
 @media (width <= 1024px) {
-  .workspace-grid {
-    grid-template-columns: 1fr;
-  }
-
   .workspace-row {
     grid-template-columns: 1fr 1fr;
   }

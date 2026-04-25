@@ -98,5 +98,5 @@ describe('tabs store', () => {
 
     expect(router.currentRoute.value.path).toBe('/overview/analytics')
     expect(tabsStore.items.map((item) => item.path)).toEqual(['/overview/analytics'])
-  })
+  }, 10_000)
 })

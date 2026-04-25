@@ -1,18 +1,17 @@
 import { createApp } from 'vue'
-import ElementPlus from 'element-plus'
 import App from './App.vue'
 import { setupDirectives } from './directives'
 import { setupRouter } from './app/router/setup-router'
-import { setupStore } from './stores'
-import 'element-plus/dist/index.css'
+import { pinia, setupStore } from './stores'
+import { useThemeStore } from './stores/theme'
 import './styles/tailwind.css'
 import './styles/index.scss'
 
 async function bootstrap() {
   const app = createApp(App)
 
-  app.use(ElementPlus)
   setupStore(app)
+  useThemeStore(pinia).initializeTheme()
   setupDirectives(app)
   await setupRouter(app)
 

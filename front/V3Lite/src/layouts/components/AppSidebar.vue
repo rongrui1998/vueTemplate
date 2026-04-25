@@ -7,6 +7,15 @@ import { appEnv } from '@/constants/env'
 import type { MenuItem } from '@/types/permission'
 import { usePermissionStore } from '@/stores/permission'
 
+withDefaults(
+  defineProps<{
+    collapsed?: boolean
+  }>(),
+  {
+    collapsed: false,
+  },
+)
+
 const permissionStore = usePermissionStore()
 const route = useRoute()
 
@@ -95,7 +104,7 @@ watch(
 </script>
 
 <template>
-  <aside class="sidebar-shell">
+  <aside class="sidebar-shell" :class="{ 'sidebar-shell--collapsed': collapsed }">
     <div class="sidebar-brand">
       <div class="brand-mark">
         <span />
@@ -132,8 +141,25 @@ watch(
   flex-direction: column;
   gap: 14px;
   padding: 14px 10px 12px;
-  border-right: 1px solid rgb(255 255 255 / 8%);
-  background: linear-gradient(180deg, rgb(11 15 25) 0%, rgb(13 18 30) 100%), rgb(10 13 20);
+  border-right: 1px solid var(--app-sidebar-border);
+  background: var(--app-sidebar-bg);
+  overflow: hidden;
+  transition:
+    padding 0.2s ease,
+    gap 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.sidebar-shell--collapsed {
+  gap: 0;
+  padding: 0;
+  border-right-color: transparent;
+  pointer-events: none;
+
+  > * {
+    opacity: 0;
+  }
 }
 
 .sidebar-brand {
@@ -169,13 +195,13 @@ watch(
   margin: 0;
   font-size: 14px;
   font-weight: 700;
-  color: #f8fafc;
+  color: var(--app-text-primary);
 }
 
 .brand-subtitle {
   margin: 2px 0 0;
   font-size: 10px;
-  color: #64748b;
+  color: var(--app-text-subtle);
 }
 
 .sidebar-menu {
@@ -192,8 +218,8 @@ watch(
   gap: 10px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgb(15 23 42 / 80%);
-  color: #94a3b8;
+  background: var(--app-card-bg-secondary);
+  color: var(--app-text-muted);
   font-size: 12px;
 }
 

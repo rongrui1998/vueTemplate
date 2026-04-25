@@ -90,16 +90,16 @@ const sourceCards = [
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
-  border: 1px solid rgb(255 255 255 / 6%);
+  border: 1px solid var(--app-panel-border);
   border-radius: 18px;
   background:
-    radial-gradient(circle at top right, rgb(59 130 246 / 22%), transparent 26%),
-    linear-gradient(180deg, rgb(17 24 39) 0%, rgb(12 18 30) 100%);
+    radial-gradient(circle at top right, rgb(59 130 246 / 18%), transparent 26%),
+    var(--app-panel-bg);
 }
 
 .hero-banner__eyebrow {
   margin: 0;
-  color: #60a5fa;
+  color: var(--app-text-accent);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -109,7 +109,7 @@ const sourceCards = [
 .hero-banner h1 {
   margin: 10px 0 0;
   max-width: 780px;
-  color: #f8fafc;
+  color: var(--app-text-primary);
   font-size: 28px;
   line-height: 1.25;
 }
@@ -117,7 +117,7 @@ const sourceCards = [
 .hero-banner__desc {
   max-width: 760px;
   margin: 12px 0 0;
-  color: #94a3b8;
+  color: var(--app-text-muted);
   line-height: 1.8;
 }
 
@@ -127,18 +127,18 @@ const sourceCards = [
   flex-direction: column;
   gap: 8px;
   padding: 18px;
-  border: 1px solid rgb(255 255 255 / 7%);
+  border: 1px solid var(--app-panel-border);
   border-radius: 18px;
-  background: rgb(15 23 42 / 78%);
+  background: var(--app-card-bg-secondary);
 
   span {
-    color: #64748b;
+    color: var(--app-text-subtle);
     font-size: 12px;
     text-transform: uppercase;
   }
 
   strong {
-    color: #f8fafc;
+    color: var(--app-text-primary);
     font-size: 15px;
   }
 }
@@ -153,9 +153,9 @@ const sourceCards = [
 .stat-card,
 .source-card,
 .trend-panel {
-  border: 1px solid rgb(255 255 255 / 6%);
+  border: 1px solid var(--app-panel-border);
   border-radius: 18px;
-  background: rgb(12 18 30 / 92%);
+  background: var(--app-card-bg);
 }
 
 .stat-card {
@@ -164,7 +164,7 @@ const sourceCards = [
   strong {
     display: inline-block;
     margin-top: 18px;
-    color: #f8fafc;
+    color: var(--app-text-primary);
     font-size: 34px;
     line-height: 1;
   }
@@ -174,11 +174,11 @@ const sourceCards = [
     align-items: center;
     justify-content: space-between;
     margin: 18px 0 0;
-    color: #94a3b8;
+    color: var(--app-text-muted);
   }
 
   span {
-    color: #e2e8f0;
+    color: var(--app-text-secondary);
     font-weight: 600;
   }
 }
@@ -187,7 +187,7 @@ const sourceCards = [
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #e2e8f0;
+  color: var(--app-text-secondary);
   font-size: 16px;
   font-weight: 600;
 }
@@ -213,7 +213,7 @@ const sourceCards = [
 
   p {
     margin: 0;
-    color: #64748b;
+    color: var(--app-text-subtle);
     font-size: 13px;
   }
 }
@@ -223,13 +223,13 @@ const sourceCards = [
   margin-right: 10px;
   padding: 8px 12px;
   border-radius: 12px;
-  background: rgb(15 23 42 / 80%);
-  color: #94a3b8;
+  background: var(--app-chip-bg);
+  color: var(--app-text-muted);
 }
 
 .trend-chip--active {
-  color: #f8fafc;
-  background: rgb(30 41 59 / 92%);
+  color: var(--app-text-primary);
+  background: var(--app-chip-active-bg);
 }
 
 .chart-box {
@@ -240,15 +240,7 @@ const sourceCards = [
   min-height: 300px;
   padding: 16px 4px 4px;
   border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgb(15 23 42 / 72%) 0%, rgb(10 15 26 / 20%) 100%),
-    repeating-linear-gradient(
-      to top,
-      transparent 0,
-      transparent 58px,
-      rgb(148 163 184 / 8%) 58px,
-      rgb(148 163 184 / 8%) 59px
-    );
+  background: var(--app-chart-bg);
 }
 
 .chart-box__bar {
@@ -274,17 +266,17 @@ const sourceCards = [
 
   p {
     margin: 0;
-    color: #94a3b8;
+    color: var(--app-text-muted);
   }
 
   strong {
-    color: #f8fafc;
+    color: var(--app-text-primary);
     font-size: 30px;
     line-height: 1.1;
   }
 
   span {
-    color: #34d399;
+    color: var(--app-text-positive);
     font-weight: 600;
   }
 }

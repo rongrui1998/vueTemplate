@@ -7,6 +7,27 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          const normalizedId = id.replaceAll('\\', '/')
+
+          if (!normalizedId.includes('node_modules')) {
+            return
+          }
+
+          if (normalizedId.includes('vue-router') || normalizedId.includes('pinia')) {
+            return 'router-store'
+          }
+
+          if (normalizedId.includes('/vue/') || normalizedId.includes('/@vue/')) {
+            return 'vue-core'
+          }
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -19,7 +40,7 @@ export default defineConfig({
       imports: ['vue', 'vue-router', 'pinia'],
       resolvers: [
         ElementPlusResolver({
-          importStyle: false,
+          importStyle: 'css',
         }),
       ],
     }),
@@ -27,7 +48,7 @@ export default defineConfig({
       dts: true,
       resolvers: [
         ElementPlusResolver({
-          importStyle: false,
+          importStyle: 'css',
         }),
       ],
     }),
@@ -36,6 +57,17 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     setupFiles: './src/test/setup.ts',
+    css: {
+      include: /element-plus/,
+    },
+    server: {
+      deps: {
+        inline: ['element-plus'],
+        web: {
+          transformCss: true,
+        },
+      },
+    },
     coverage: {
       provider: 'v8',
     },

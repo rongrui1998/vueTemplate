@@ -1,6 +1,7 @@
-import { ACCESS_TOKEN_KEY, VISITED_TABS_KEY } from '@/constants/app'
+import { ACCESS_TOKEN_KEY, THEME_MODE_KEY, VISITED_TABS_KEY } from '@/constants/app'
 
 import type { TabItem } from '@/stores/tabs'
+export type ThemeMode = 'dark' | 'light'
 
 export function getAccessToken() {
   return localStorage.getItem(ACCESS_TOKEN_KEY) ?? ''
@@ -35,4 +36,12 @@ export function setVisitedTabs(tabs: TabItem[]) {
 
 export function clearVisitedTabs() {
   sessionStorage.removeItem(VISITED_TABS_KEY)
+}
+
+export function getThemeMode(): ThemeMode {
+  return localStorage.getItem(THEME_MODE_KEY) === 'light' ? 'light' : 'dark'
+}
+
+export function setThemeMode(mode: ThemeMode) {
+  localStorage.setItem(THEME_MODE_KEY, mode)
 }

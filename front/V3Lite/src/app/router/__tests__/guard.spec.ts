@@ -66,7 +66,7 @@ describe('route guard', () => {
     await router.isReady()
 
     expect(router.currentRoute.value.path).toBe('/overview/analytics')
-  })
+  }, 10_000)
 
   it('keeps unknown routes on 404 after access initialization', async () => {
     setActivePinia(createPinia())

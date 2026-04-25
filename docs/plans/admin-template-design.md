@@ -96,48 +96,46 @@
 
 ## 6. 工程结构
 
-本项目采用单应用分层目录结构，避免 monorepo 带来的认知和维护成本。
+本项目采用单应用分层目录结构，避免 monorepo 带来的认知和维护成本。当前仓库中的 `V3 Lite` 实际落在 `front/V3Lite/` 目录下。
 
 ```text
 front/
-  src/
-    api/
-      auth/
-      demo/
-    app/
-      guard/
-      provider/
-      router/
-    assets/
-    components/
-      business/
-      common/
-    composables/
-    constants/
-    directives/
-    layouts/
-      default/
-      components/
-    modules/
-      auth/
-      permission/
-      dashboard/
-      demo-list/
-    router/
-      routes/
-      transform/
-    stores/
+  V3Lite/
+    mock/
+    src/
+      api/
+        auth/
+        demo/
       app/
-      permission/
-      user/
-    styles/
-    types/
-    utils/
-    views/
-      auth/
-      dashboard/
-      demo/
-      error/
+        router/
+      assets/
+      components/
+        common/
+      composables/
+      constants/
+      directives/
+      layouts/
+        default/
+        components/
+      modules/
+        auth/
+      router/
+        routes/
+        transform/
+      stores/
+        permission/
+        tabs/
+        user/
+      styles/
+      test/
+      types/
+      utils/
+      views/
+        auth/
+        dashboard/
+        demo/
+        error/
+        workspace/
 ```
 
 目录原则：
@@ -318,14 +316,14 @@ interface ApiResponse<T> {
 
 实施顺序建议如下：
 
-1. 初始化 `front` 前端工程与基础质量工具
+1. 初始化 `front/V3Lite` 前端工程与基础质量工具
 2. 搭建基础布局与登录页
 3. 搭建请求层、认证状态、路由守卫
 4. 接入动态菜单与动态路由
 5. 实现权限指令和权限工具函数
 6. 完成异常页和演示页
 7. 补齐 mock、环境配置、图标与构建细节
-8. 输出 README 和使用文档
+8. 输出 `front/V3Lite/README.md` 和使用文档
 
 ## 15. 结论
 

@@ -122,7 +122,7 @@ function handleAction() {
   border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
-  color: #8b9bb4;
+  color: var(--app-text-muted);
   cursor: pointer;
   transition:
     background-color 0.18s ease,
@@ -130,9 +130,9 @@ function handleAction() {
     color 0.18s ease;
 
   &:hover {
-    color: #eef4ff;
+    color: var(--app-text-primary);
     border-color: rgb(96 165 250 / 16%);
-    background: rgb(23 31 45 / 74%);
+    background: var(--app-card-hover);
   }
 }
 
@@ -156,19 +156,19 @@ function handleAction() {
 }
 
 .menu-button__arrow {
-  color: #64748b;
+  color: var(--app-text-subtle);
   font-size: 13px;
 }
 
 .menu-button--active {
-  color: #f8fafc;
+  color: var(--app-text-primary);
   border-color: rgb(148 163 184 / 14%);
-  background: linear-gradient(180deg, rgb(32 41 58) 0%, rgb(23 31 45) 100%);
+  background: var(--app-card-active);
 }
 
 .menu-button--branch-open {
   .menu-button__arrow {
-    color: #cbd5e1;
+    color: var(--app-text-secondary);
   }
 }
 

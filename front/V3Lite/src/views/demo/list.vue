@@ -103,12 +103,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="demo-page">
-    <div class="demo-header">
+  <section class="app-page demo-page">
+    <div class="app-page-header demo-header">
       <div>
-        <p>Demo List</p>
-        <h1>标准后台列表页的第一版范式已经接上。</h1>
-        <span>查询区、表格区、分页和新增弹窗已经具备，后面再继续补编辑、删除和字典联动。</span>
+        <p class="app-page-eyebrow">Demo List</p>
+        <h1 class="app-page-title">标准后台列表页的第一版范式已经接上。</h1>
+        <span class="app-page-description"
+          >查询区、表格区、分页和新增弹窗已经具备，后面再继续补编辑、删除和字典联动。</span
+        >
       </div>
       <ElButton
         v-if="canCreate"
@@ -121,11 +123,13 @@ onMounted(() => {
       </ElButton>
     </div>
 
-    <section data-testid="query-panel" class="panel-shell query-shell">
+    <section data-testid="query-panel" class="app-panel panel-shell query-shell">
       <div class="query-shell__header">
         <div>
-          <p>筛选条件</p>
-          <span>按关键词和状态快速缩小结果范围，适合标准后台列表页的查询区模板。</span>
+          <p class="app-panel-title">筛选条件</p>
+          <span class="app-panel-description"
+            >按关键词和状态快速缩小结果范围，适合标准后台列表页的查询区模板。</span
+          >
         </div>
       </div>
 
@@ -156,7 +160,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <section class="panel-shell table-shell">
+    <section class="app-panel app-table-panel panel-shell table-shell">
       <div class="table-toolbar">
         <div class="table-toolbar__summary">
           <div data-testid="result-chip" class="result-chip">
@@ -238,61 +242,29 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.demo-page {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 18px;
-}
-
 .demo-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-
-  p {
-    margin: 0;
-    color: #60a5fa;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  h1 {
+  .app-page-title {
     margin: 10px 0 0;
-    color: #f8fafc;
     font-size: 24px;
-    line-height: 1.35;
-  }
-
-  span {
-    display: inline-block;
-    margin-top: 10px;
-    color: #94a3b8;
-    line-height: 1.7;
   }
 }
 
 .create-record-btn {
   min-width: 118px;
   height: 42px;
-  border-color: rgb(59 130 246 / 60%);
+  border-color: var(--app-button-primary-border);
   border-radius: 12px;
-  background: linear-gradient(180deg, rgb(55 125 231) 0%, rgb(40 96 194) 100%);
+  background: var(--app-button-primary-bg);
   box-shadow:
     0 12px 24px rgb(37 99 235 / 16%),
     inset 0 1px 0 rgb(255 255 255 / 18%);
+  color: var(--app-button-primary-text);
   font-weight: 600;
 }
 
 .panel-shell {
   padding: 16px;
-  border: 1px solid rgb(255 255 255 / 6%);
   border-radius: 16px;
-  background: rgb(12 18 30 / 92%);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 2%);
 }
 
 .query-shell {
@@ -302,19 +274,8 @@ onMounted(() => {
 }
 
 .query-shell__header {
-  p {
-    margin: 0;
-    color: #e2e8f0;
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  span {
-    display: inline-block;
-    margin-top: 6px;
-    color: #64748b;
-    font-size: 12px;
-    line-height: 1.7;
+  .app-panel-description {
+    max-width: 56ch;
   }
 }
 
@@ -332,8 +293,6 @@ onMounted(() => {
 }
 
 .table-shell {
-  display: flex;
-  flex-direction: column;
   gap: 14px;
 }
 
@@ -351,31 +310,31 @@ onMounted(() => {
 }
 
 :deep(.query-button--primary) {
-  border-color: rgb(59 130 246 / 58%);
-  background: linear-gradient(180deg, rgb(55 125 231) 0%, rgb(40 96 194) 100%);
+  border-color: var(--app-button-primary-border);
+  background: var(--app-button-primary-bg);
   box-shadow:
     0 10px 24px rgb(37 99 235 / 18%),
     inset 0 1px 0 rgb(255 255 255 / 16%);
-  color: #eff6ff;
+  color: var(--app-button-primary-text);
 }
 
 :deep(.query-button--primary:hover) {
-  border-color: rgb(96 165 250 / 72%);
-  background: linear-gradient(180deg, rgb(69 137 241) 0%, rgb(47 108 212) 100%);
-  color: #fff;
+  border-color: var(--app-button-primary-border-hover);
+  background: var(--app-button-primary-bg-hover);
+  color: var(--app-button-primary-text);
 }
 
 :deep(.query-button--secondary) {
-  border-color: rgb(71 85 105 / 42%);
-  background: linear-gradient(180deg, rgb(28 38 56) 0%, rgb(20 29 44) 100%);
+  border-color: var(--app-button-secondary-border);
+  background: var(--app-button-secondary-bg);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 4%);
-  color: #cbd5e1;
+  color: var(--app-button-secondary-text);
 }
 
 :deep(.query-button--secondary:hover) {
-  border-color: rgb(96 165 250 / 28%);
-  background: linear-gradient(180deg, rgb(33 45 66) 0%, rgb(24 34 52) 100%);
-  color: #f8fafc;
+  border-color: var(--app-button-secondary-border-hover);
+  background: var(--app-button-secondary-bg-hover);
+  color: var(--app-text-primary);
 }
 
 .table-toolbar {
@@ -387,7 +346,7 @@ onMounted(() => {
 
   p {
     margin: 0;
-    color: #64748b;
+    color: var(--app-text-subtle);
     font-size: 12px;
   }
 }
@@ -399,7 +358,7 @@ onMounted(() => {
 }
 
 .table-toolbar__hint {
-  color: #64748b;
+  color: var(--app-text-subtle);
   font-size: 12px;
 }
 
@@ -408,18 +367,18 @@ onMounted(() => {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  border: 1px solid rgb(96 165 250 / 14%);
+  border: 1px solid var(--app-panel-border);
   border-radius: 999px;
-  background: rgb(18 30 49 / 78%);
+  background: var(--app-chip-bg);
 
   strong {
-    color: #f8fafc;
+    color: var(--app-text-primary);
     font-size: 18px;
     line-height: 1;
   }
 
   span {
-    color: #94a3b8;
+    color: var(--app-text-muted);
     font-size: 12px;
   }
 }
@@ -490,10 +449,10 @@ onMounted(() => {
 
 :deep(.demo-pagination) {
   --el-pagination-bg-color: transparent;
-  --el-pagination-button-color: #cbd5e1;
-  --el-pagination-button-disabled-bg-color: rgb(15 23 42 / 46%);
-  --el-pagination-button-disabled-color: #64748b;
-  --el-pagination-hover-color: #f8fafc;
+  --el-pagination-button-color: var(--app-text-secondary);
+  --el-pagination-button-disabled-bg-color: var(--app-input-bg);
+  --el-pagination-button-disabled-color: var(--app-text-subtle);
+  --el-pagination-hover-color: var(--app-text-primary);
 
   display: inline-flex;
   align-items: center;
@@ -506,11 +465,11 @@ onMounted(() => {
   min-width: 38px;
   height: 36px;
   padding: 0 10px;
-  border: 1px solid rgb(148 163 184 / 14%);
+  border: 1px solid var(--app-table-border);
   border-radius: 10px;
-  background: linear-gradient(180deg, rgb(20 28 44) 0%, rgb(15 22 36) 100%);
+  background: var(--app-button-secondary-bg);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
-  color: #cbd5e1;
+  color: var(--app-text-secondary);
   font-weight: 600;
   transition:
     border-color 0.2s ease,
@@ -522,28 +481,28 @@ onMounted(() => {
 :deep(.demo-pagination .btn-prev:hover),
 :deep(.demo-pagination .btn-next:hover),
 :deep(.demo-pagination .el-pager li:hover) {
-  border-color: rgb(96 165 250 / 30%);
-  color: #f8fafc;
-  background: linear-gradient(180deg, rgb(25 36 58) 0%, rgb(18 28 45) 100%);
+  border-color: var(--app-button-secondary-border-hover);
+  color: var(--app-text-primary);
+  background: var(--app-button-secondary-bg-hover);
 }
 
 :deep(.demo-pagination.is-background .btn-prev),
 :deep(.demo-pagination.is-background .btn-next),
 :deep(.demo-pagination.is-background .el-pager li) {
-  background: linear-gradient(180deg, rgb(20 28 44) 0%, rgb(15 22 36) 100%);
+  background: var(--app-button-secondary-bg);
 }
 
 :deep(.demo-pagination .el-pager li.is-active) {
-  border-color: rgb(96 165 250 / 48%);
-  background: linear-gradient(180deg, rgb(39 94 179) 0%, rgb(31 77 149) 100%);
+  border-color: var(--app-button-primary-border);
+  background: var(--app-button-primary-bg);
   box-shadow: 0 8px 18px rgb(37 99 235 / 16%);
-  color: #eff6ff;
+  color: var(--app-button-primary-text);
 }
 
 :deep(.demo-pagination .btn-prev:disabled),
 :deep(.demo-pagination .btn-next:disabled) {
-  border-color: rgb(71 85 105 / 18%);
-  background: rgb(15 23 42 / 48%);
+  border-color: var(--app-table-border);
+  background: var(--app-input-bg);
   box-shadow: none;
 }
 
@@ -562,22 +521,40 @@ onMounted(() => {
 :deep(.el-select__wrapper) {
   min-height: 42px;
   border-radius: 12px;
-  background: rgb(15 23 42 / 88%);
-  box-shadow: inset 0 0 0 1px rgb(148 163 184 / 14%);
+  background: var(--app-input-bg);
+  box-shadow: inset 0 0 0 1px var(--app-input-border);
 }
 
 :deep(.el-input__wrapper:hover),
 :deep(.el-select__wrapper:hover) {
-  box-shadow: inset 0 0 0 1px rgb(96 165 250 / 24%);
+  box-shadow: inset 0 0 0 1px var(--app-input-border-hover);
+}
+
+:deep(.el-input__inner),
+:deep(.el-select__placeholder),
+:deep(.el-select__selected-item),
+:deep(.el-textarea__inner) {
+  color: var(--app-text-secondary);
+}
+
+:deep(.el-input__inner::placeholder),
+:deep(.el-textarea__inner::placeholder) {
+  color: var(--app-text-subtle);
+}
+
+:deep(.el-select__caret),
+:deep(.el-input__icon) {
+  color: var(--app-text-subtle);
 }
 
 :deep(.el-table) {
-  --el-table-bg-color: rgb(15 23 42 / 92%);
+  --el-table-bg-color: var(--app-table-bg);
   --el-table-tr-bg-color: transparent;
-  --el-table-border-color: rgb(148 163 184 / 12%);
-  --el-table-header-bg-color: rgb(30 41 59 / 85%);
-  --el-table-text-color: #e2e8f0;
-  --el-table-row-hover-bg-color: rgb(30 41 59 / 72%);
+  --el-table-border-color: var(--app-table-border);
+  --el-table-header-bg-color: var(--app-table-header-bg);
+  --el-table-text-color: var(--app-text-secondary);
+  --el-table-header-text-color: var(--app-text-muted);
+  --el-table-row-hover-bg-color: var(--app-table-row-hover);
 
   border-radius: 16px;
   overflow: hidden;
@@ -585,7 +562,7 @@ onMounted(() => {
 
 :deep(.el-table th.el-table__cell) {
   padding: 14px 0;
-  color: #a8b4c8;
+  color: var(--app-text-muted);
   font-size: 13px;
   font-weight: 600;
 }
@@ -595,21 +572,57 @@ onMounted(() => {
 }
 
 :deep(.el-table .el-table__row:nth-child(even) td.el-table__cell) {
-  background: rgb(24 33 51 / 44%);
+  background: var(--app-table-row-alt);
 }
 
 :deep(.el-dialog) {
-  border: 1px solid rgb(255 255 255 / 6%);
+  border: 1px solid var(--app-dialog-border);
   border-radius: 18px;
-  background: rgb(10 15 26 / 98%);
+  background: var(--app-dialog-bg);
+}
+
+:deep(.el-dialog__header),
+:deep(.el-dialog__body),
+:deep(.el-dialog__footer) {
+  background: transparent;
 }
 
 :deep(.el-dialog__title) {
-  color: #f8fafc;
+  color: var(--app-text-primary);
 }
 
 :deep(.el-form-item__label) {
-  color: #cbd5e1;
+  color: var(--app-text-secondary);
+}
+
+:deep(.dialog-footer .el-button) {
+  min-width: 96px;
+  height: 40px;
+  border-radius: 12px;
+}
+
+:deep(.dialog-footer .el-button:not(.el-button--primary)) {
+  border-color: var(--app-button-secondary-border);
+  background: var(--app-button-secondary-bg);
+  color: var(--app-button-secondary-text);
+}
+
+:deep(.dialog-footer .el-button:not(.el-button--primary):hover) {
+  border-color: var(--app-button-secondary-border-hover);
+  background: var(--app-button-secondary-bg-hover);
+  color: var(--app-text-primary);
+}
+
+:deep(.dialog-footer .el-button--primary) {
+  border-color: var(--app-button-primary-border);
+  background: var(--app-button-primary-bg);
+  color: var(--app-button-primary-text);
+}
+
+:deep(.dialog-footer .el-button--primary:hover) {
+  border-color: var(--app-button-primary-border-hover);
+  background: var(--app-button-primary-bg-hover);
+  color: var(--app-button-primary-text);
 }
 
 @media (width <= 1024px) {
